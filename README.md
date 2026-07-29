@@ -1,5 +1,7 @@
 # Finance App — Controle Financeiro Pessoal
 
+![CI](https://github.com/marcossssantos1/Finance-Control-App/actions/workflows/ci.yml/badge.svg)
+
 Aplicação para controle de finanças pessoais: contas, categorias, transações,
 metas de orçamento e dashboard. Backend em Java/Spring Boot, frontend em React
 (a entrar na Onda 3), autenticação via JWT.
@@ -81,10 +83,38 @@ migration `V{n}__descricao.sql` é adicionada.
 - Rotas protegidas exigem header `Authorization: Bearer <token>`
 - Rotas públicas: `/auth/register`, `/auth/login`, `/actuator/health`, `/api/ping`
 
+## Contas
+
+- `POST /contas` — cria conta vinculada ao usuário autenticado
+- `GET /contas` — lista contas do usuário logado
+- `GET /contas/{id}` — busca conta por id (404 se não existir ou for de outro usuário)
+- Tipos disponíveis: `CORRENTE`, `POUPANCA`, `CARTEIRA`, `INVESTIMENTO`
+
+## Categorias
+
+- `POST /categorias` — cria categoria customizada vinculada ao usuário autenticado
+- `GET /categorias` — lista categorias padrão do sistema + customizadas do usuário
+- Tipos: `RECEITA`, `DESPESA`
+
+## Transações
+
+- `POST /transacoes` — cria transação (valida que conta e categoria pertencem/estão disponíveis ao usuário; tipo deve bater com o tipo da categoria)
+- `GET /transacoes` — lista paginada, com filtros opcionais: `dataInicio`, `dataFim`, `contaId`, `categoriaId`, `page`, `size`
+- `DELETE /transacoes/{id}` — remove transação (204)
+
+## CI/CD
+
+- **CI** (`.github/workflows/ci.yml`): a cada push/PR na `main`, builda o
+  backend, roda todos os testes (unitários + integração com Testcontainers) e
+  publica o `.jar` como artefato.
+- **CD**: deploy automático no [Render](https://render.com) a cada push na
+  `main`, via `render.yaml` (Blueprint). Veja o guia completo em
+  [`DEPLOY.md`](./DEPLOY.md).
+
 ## Roadmap (ondas)
 
 - [x] **Onda 1** — Setup, autenticação JWT, entidade Usuário ✅ completa
-- [ ] **Onda 2** — Contas, Categorias, Transações
+- [x] **Onda 2** — Contas, Categorias, Transações ✅ completa
 - [ ] **Onda 3** — Dashboard, gráficos, frontend React
 - [ ] **Onda 4** — Metas de orçamento, deploy
 
