@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: finance-app-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: oregon
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_HOST
+        fromDatabase:
+          name: finance-app-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: finance-app-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: finance-app-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: finance-app-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: finance-app-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MS
+        value: "86400000"
+      - key: SERVER_PORT
+        value: "8080"
+    healthCheckPath: /actuator/health
+
+databases:
+  - name: finance-app-db
+    plan: free
+    region: oregon
+    databaseName: financeapp
+    user: financeapp
