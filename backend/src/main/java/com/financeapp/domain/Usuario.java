@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,13 +21,14 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 150)
     private String nome;
 
     @Column(nullable = false, unique = true)
@@ -39,9 +41,9 @@ public class Usuario {
     private LocalDateTime dataCriacao;
 
     @PrePersist
-    void preencherDataCriacao() {
-        if (dataCriacao == null) {
-            dataCriacao = LocalDateTime.now();
+    public void prePersist() {
+        if (this.dataCriacao == null) {
+            this.dataCriacao = LocalDateTime.now();
         }
     }
 }

@@ -74,9 +74,16 @@ As migrations ficam em `backend/src/main/resources/db/migration`, gerenciadas
 pelo Flyway. A cada nova entidade (Usuário, Conta, Transação...), uma nova
 migration `V{n}__descricao.sql` é adicionada.
 
+## Autenticação
+
+- `POST /auth/register` — cria usuário (nome, email, senha)
+- `POST /auth/login` — retorna JWT (`{ "token": "...", "tipo": "Bearer" }`)
+- Rotas protegidas exigem header `Authorization: Bearer <token>`
+- Rotas públicas: `/auth/register`, `/auth/login`, `/actuator/health`, `/api/ping`
+
 ## Roadmap (ondas)
 
-- [x] **Onda 1** — Setup, autenticação JWT, entidade Usuário
+- [x] **Onda 1** — Setup, autenticação JWT, entidade Usuário ✅ completa
 - [ ] **Onda 2** — Contas, Categorias, Transações
 - [ ] **Onda 3** — Dashboard, gráficos, frontend React
 - [ ] **Onda 4** — Metas de orçamento, deploy
