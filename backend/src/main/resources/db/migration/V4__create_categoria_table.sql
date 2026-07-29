@@ -1,6 +1,5 @@
 CREATE TABLE categoria (
     id BIGSERIAL PRIMARY KEY,
-    usuario_id BIGINT NULL,
     nome VARCHAR(100) NOT NULL,
     tipo VARCHAR(10) NOT NULL,
     cor VARCHAR(7),

@@ -33,9 +33,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // null = categoria padrão do sistema, visível para todos os usuários
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario;
 
     @Column(nullable = false, length = 100)
@@ -53,8 +51,7 @@ public class Categoria {
 
     @PrePersist
     public void prePersist() {
-        if (this.dataCriacao == null) {
-            this.dataCriacao = LocalDateTime.now();
         }
     }
-}
+
+
