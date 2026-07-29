@@ -29,7 +29,6 @@ public class CategoriaService {
                 .cor(request.cor())
                 .build();
 
-        return CategoriaResponse.fromEntity(categoriaRepository.save(categoria));
     }
 
     public List<CategoriaResponse> listarDisponiveisParaUsuario() {
