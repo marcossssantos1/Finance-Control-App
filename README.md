@@ -81,10 +81,17 @@ migration `V{n}__descricao.sql` é adicionada.
 - Rotas protegidas exigem header `Authorization: Bearer <token>`
 - Rotas públicas: `/auth/register`, `/auth/login`, `/actuator/health`, `/api/ping`
 
+## Contas
+
+- `POST /contas` — cria conta vinculada ao usuário autenticado
+- `GET /contas` — lista contas do usuário logado
+- `GET /contas/{id}` — busca conta por id (404 se não existir ou for de outro usuário)
+- Tipos disponíveis: `CORRENTE`, `POUPANCA`, `CARTEIRA`, `INVESTIMENTO`
+
 ## Roadmap (ondas)
 
 - [x] **Onda 1** — Setup, autenticação JWT, entidade Usuário ✅ completa
-- [ ] **Onda 2** — Contas, Categorias, Transações
+- [ ] **Onda 2** — Contas ✅ / Categorias ⏳ / Transações ⏳
 - [ ] **Onda 3** — Dashboard, gráficos, frontend React
 - [ ] **Onda 4** — Metas de orçamento, deploy
 
