@@ -1,0 +1,21 @@
+# Java / Maven
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Env
+.env
+
+# OS
+.DS_Store
+
+# Frontend (quando adicionarmos)
+node_modules/
+dist/
+build/
