@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 
 const TOKEN_STORAGE_KEY = "finance_app_token";
 
@@ -9,7 +9,14 @@ const client = axios.create({
 client.interceptors.request.use((config) => {
   const token = localStorage.getItem(TOKEN_STORAGE_KEY);
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    // Versões recentes do axios usam a classe AxiosHeaders, que exige
+    // .set() em vez de atribuição direta de propriedade — atribuição
+    // direta pode silenciosamente não anexar o header. Garantimos que
+    // config.headers seja uma instância válida e usamos o método correto.
+    if (!(config.headers instanceof AxiosHeaders)) {
+      config.headers = AxiosHeaders.from(config.headers ?? {});
+    }
+    config.headers.set("Authorization", `Bearer ${token}`);
   }
   return config;
 });
